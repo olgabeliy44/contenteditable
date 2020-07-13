@@ -1,0 +1,16 @@
+#mydiv {
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    background-color: white;
+    background-color: -moz-field;
+    font: -moz-field;
+    font: -webkit-small-control;
+    margin: 50px;
+    padding: 10px;
+}
+
+.btn {
+    width: 20%;
+    margin: 50px;
+    padding: 10px;
+}
