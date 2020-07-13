@@ -1,3 +1,4 @@
+
 #mydiv {
     -moz-appearance: textfield;
     -webkit-appearance: textfield;
@@ -6,7 +7,7 @@
     font: -moz-field;
     font: -webkit-small-control;
     margin: 50px;
-    padding: 10px;
+    padding: 15px;
 }
 
 .btn {

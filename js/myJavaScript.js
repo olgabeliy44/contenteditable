@@ -55,8 +55,10 @@ function insertTextAtCaret(tag) {
 
 function getId(e) {
     id = e.target.className;
+
     var check = id.match(/[0psd]+/g);
     if(e.target.className !== "btn") {
+
        isContenteditable = check !== null;
     }
 }
