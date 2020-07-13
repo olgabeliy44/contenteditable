@@ -59,7 +59,8 @@ function getId(e) {
     var check = id.match(/[0psd]+/g);
 
     if(e.target.className !== "btn") {
-       isContenteditable = check !== null && check !== undefined && check !== ""; return;
+       isContenteditable = check !== null;
+       return;
     }
     else return;
 
