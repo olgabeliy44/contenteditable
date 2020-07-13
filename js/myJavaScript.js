@@ -11,7 +11,7 @@ function btn1() {
 }
 
 function btn2() {
-    var span = document.createElement('span')
+    var span = document.createElement('span');
     span.className = s+"s";
     span.innerHTML = "download";
     insertTextAtCaret(span);
@@ -57,8 +57,18 @@ function getId(e) {
     id = e.target.className;
 
     var check = id.match(/[0psd]+/g);
-    if(e.target.className !== "btn") {
 
-       isContenteditable = check !== null;
+    if(e.target.className !== "btn") {
+       isContenteditable = check !== null && check !== undefined && check !== ""; return;
+    }
+    else return;
+
+    if(check) {
+        isContenteditable = true; return;
+    }
+
+    if (isContenteditable && e.target.id === "")
+    {
+        isContenteditable = false;
     }
 }
