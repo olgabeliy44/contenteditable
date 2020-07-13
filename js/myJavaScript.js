@@ -33,7 +33,7 @@ function insertTextAtCaret(tag) {
         if (sel.getRangeAt && sel.rangeCount) {
             range = sel.getRangeAt(0);
 
-            if(isContenteditable){
+            if(range.intersectsNode(myDiv)){
                 range.deleteContents();
                 range.insertNode( tag );
                 sel.removeAllRanges();
@@ -50,26 +50,5 @@ function insertTextAtCaret(tag) {
         }
     } else if (document.selection && document.selection.createRange) {
         document.selection.createRange().tag = tag;
-    }
-}
-
-function getId(e) {
-    id = e.target.className;
-
-    var check = id.match(/[0psd]+/g);
-
-    if(e.target.className !== "btn") {
-       isContenteditable = check !== null;
-       return;
-    }
-    else return;
-
-    if(check) {
-        isContenteditable = true; return;
-    }
-
-    if (isContenteditable && e.target.id === "")
-    {
-        isContenteditable = false;
     }
 }
