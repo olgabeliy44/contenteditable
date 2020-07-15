@@ -1,7 +1,8 @@
 var myDiv = document.getElementById('mydiv');
+myDiv.onclick = function() { keyChange("onclick")};
+myDiv.onkeypress = function() { keyChange("onchange")};
 var p = 0, s = 0, d = 0;
-var isContenteditable = false;
-var id;
+var preCaretRange, preSel;
 
 function btn1() {
     var paragraph = document.createElement('p');
@@ -25,30 +26,68 @@ function btn3() {
 }
 
 function insertTextAtCaret(tag) {
-    var sel, range;
+
+    var tempSel, tempRange;
 
     if (window.getSelection) {
-        sel = window.getSelection();
+        tempSel = window.getSelection();
 
-        if (sel.getRangeAt && sel.rangeCount) {
-            range = sel.getRangeAt(0);
+        if (tempSel.getRangeAt && tempSel.rangeCount) {
+            tempRange = tempSel.getRangeAt(0);
 
-            if(range.intersectsNode(myDiv)){
-                range.deleteContents();
-                range.insertNode( tag );
-                sel.removeAllRanges();
-                sel.setPosition(tag, 1);
+            if(tempRange.intersectsNode(myDiv)){
+                tempRange.deleteContents();
+                tempRange.insertNode( tag );
+                tempSel.removeAllRanges();
+                tempSel.setPosition(tag, 1);
+
+                preCaretRange = tempRange;
+                preSel = tempSel;
             }
             else {
-                myDiv.appendChild(tag);
-                sel.setPosition(tag, 1);
+                if(preSel !== null && preCaretRange !== null) {
+                    try {
+                        tempRange = preCaretRange.cloneRange();
+                        tempRange.insertNode( tag );
+                        tempSel.removeAllRanges();
+                        tempSel.setPosition(tag, 1);
+                        preSel = tempSel;
+                        preCaretRange = tempSel;
+                    }
+                    catch (e) {
+                        console.log(e);
+                        myDiv.appendChild(tag);
+                        tempSel.setPosition(tag, 1);
+                    }
+                }
+                else {
+                    myDiv.appendChild(tag);
+                    tempSel.setPosition(tag, 1);
+                }
             }
         }
         else {
             myDiv.appendChild(tag);
-            sel.setPosition(tag, 1);
+            tempSel.setPosition(tag, 1);
         }
     } else if (document.selection && document.selection.createRange) {
         document.selection.createRange().tag = tag;
+    }
+}
+
+function keyChange(state) {
+
+    console.log(state);
+
+    var tempSel, tempRange;
+
+    if (window.getSelection) {
+        tempSel = window.getSelection();
+
+        if (tempSel.getRangeAt && tempSel.rangeCount) {
+            tempRange = tempSel.getRangeAt(0);
+            preCaretRange = tempRange;
+            preSel = tempSel;
+        }
     }
 }
